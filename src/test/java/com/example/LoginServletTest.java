@@ -14,13 +14,13 @@ import com.example.LoginServlet;
 
 public class LoginServletTest {
 
-    private LoginServlet loginServlet;
-
     @Mock
     private HttpServletRequest request;
 
     @Mock
     private HttpServletResponse response;
+
+    private LoginServlet loginServlet;
 
     @BeforeEach
     public void setUp() {
@@ -29,14 +29,14 @@ public class LoginServletTest {
     }
 
     @Test
-    public void testDoPostLogsCredentials() throws ServletException, IOException {
-        when(request.getParameter("username")).thenReturn("test@example.com");
-        when(request.getParameter("password")).thenReturn("password123");
+    public void testDoPost() throws ServletException, IOException {
+        when(request.getParameter("username")).thenReturn("testuser");
+        when(request.getParameter("password")).thenReturn("testpass");
 
         loginServlet.doPost(request, response);
 
-        // Verify that the credentials are logged (you can implement logging in your servlet)
-        // This is a placeholder for actual logging verification
-        assertTrue(true); // Replace with actual logging verification if implemented
+        verify(request, times(1)).getParameter("username");
+        verify(request, times(1)).getParameter("password");
+        verify(response).sendRedirect("login.jsp");
     }
 }

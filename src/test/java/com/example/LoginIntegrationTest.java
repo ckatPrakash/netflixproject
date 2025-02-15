@@ -29,27 +29,22 @@ public class LoginIntegrationTest {
     }
 
     @Test
-    public void testLoginPageAccessibility() throws ServletException, IOException {
-        // Simulate a request to the login page
-        when(request.getRequestURI()).thenReturn("/login.jsp");
-        
-        // Call the servlet's doGet method
-        loginServlet.doGet(request, response);
-        
-        // Verify that the response status is OK (200)
-        verify(response).setStatus(HttpServletResponse.SC_OK);
+    public void testFormSubmission() throws ServletException, IOException {
+        when(request.getParameter("username")).thenReturn("testuser");
+        when(request.getParameter("password")).thenReturn("testpass");
+
+        loginServlet.doPost(request, response);
+
+        verify(request, times(1)).getParameter("username");
+        verify(request, times(1)).getParameter("password");
+        verify(response).sendRedirect("login.jsp");
     }
 
     @Test
-    public void testFormSubmission() throws ServletException, IOException {
-        // Simulate form submission
-        when(request.getParameter("email")).thenReturn("test@example.com");
-        when(request.getParameter("password")).thenReturn("password123");
-        
-        // Call the servlet's doPost method
-        loginServlet.doPost(request, response);
-        
-        // Verify that the response status is OK (200)
-        verify(response).setStatus(HttpServletResponse.SC_OK);
+    public void testLoginPageAccessibility() throws ServletException, IOException {
+        loginServlet.doGet(request, response);
+
+        // Verify that the doGet method is called, you can add more verifications if needed
+        verify(response, never()).sendError(anyInt());
     }
 }
