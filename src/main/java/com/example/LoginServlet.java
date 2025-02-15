@@ -10,15 +10,16 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String emailOrUsername = request.getParameter("emailOrUsername");
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
-
-        // Log the submitted data (for demonstration purposes)
-        System.out.println("Email/Username: " + emailOrUsername);
+        System.out.println("Username: " + username);
         System.out.println("Password: " + password);
-
-        // Redirect to a success page or back to the login page
         response.sendRedirect("login.jsp");
+    }
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Handle GET request if needed
     }
 }
